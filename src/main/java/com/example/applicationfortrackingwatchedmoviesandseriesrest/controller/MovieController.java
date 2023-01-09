@@ -1,6 +1,7 @@
 package com.example.applicationfortrackingwatchedmoviesandseriesrest.controller;
 
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.DTO.MovieDTO;
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.Movie;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.Role;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.User;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.UserMovieWatched;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -95,7 +97,32 @@ public class MovieController
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	//TODO:
-	//Getmapping na pateka /{movieId}/info
-	//ama treba se skros i ui i ovde full implementacija
+
+	@PutMapping("/{movieId}/edit")
+	public ResponseEntity<String> editMovie(@PathVariable Long userId, @PathVariable Long movieId, @RequestBody @Valid MovieDTO movieDTO)
+	{
+		try
+		{
+			movieService.editMovie(movieId, movieDTO);
+			return new ResponseEntity<String>("\"Success\"", HttpStatus.OK);
+		} catch (Exception e)
+		{
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping("/{movieId}/info")
+	public ModelAndView getAllMovies(@PathVariable Long userId, @PathVariable Long movieId)
+	{
+		ModelAndView mav;
+		mav = new ModelAndView("movieInfo");
+		mav.addObject("userId", userId);
+		Movie movie = movieService.getMovieById(movieId);
+		if (movie == null)
+		{
+			throw new RuntimeException("Movie does not exist");
+		}
+		mav.addObject("movie", movie);
+		return mav;
+	}
 }

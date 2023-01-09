@@ -12,4 +12,8 @@ public interface MovieService
 	void saveMovie(MovieDTO movieDTO);
 
 	void deleteMovie(Long id);
+
+	void editMovie(Long id, MovieDTO movieDTO);
+
+	Movie getMovieById(Long id);
 }

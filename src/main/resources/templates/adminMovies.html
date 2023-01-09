@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>User Movies Home</title>
+    <title>Admin Movies Home</title>
     <script type="text/javascript" src="/webjars/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./static/js/jquery.toast.js" th:src="@{/js/jquery.toast.js}"></script>
@@ -68,6 +68,7 @@
                 <th scope="col" class="col-lg-1">Year</th>
                 <th scope="col" class="col-lg-1"></th>
                 <th scope="col" class="col-lg-1"></th>
+                <th scope="col" class="col-lg-1"></th>
             </tr>
             </thead>
 
@@ -80,9 +81,94 @@
                 <td th:text="${movie.director}"></td>
                 <td th:text="${movie.year}"></td>
                 <td>
-                    <button class="btn btn-primary" th:attr="onclick=|viewMovie('${movie.id}')|"><i
-                            class="fa fa-info"></i> View Info
+                    <a class="btn btn-primary"
+                       th:href="@{/users/{userId}/movies/{movieId}/info(userId=${userId}, movieId=${movie.id})}"><i
+                            class="fa fa-info"></i> View Info</a>
+                </td>
+                <td class="text-start">
+                    <button class="btn btn-secondary" th:id="'edit-movie-btn' + ${movie.id}">
+                        <i
+                                class="fa fa-edit" th:id="'edit-movie-btn' + ${movie.id}"></i> Edit Info
                     </button>
+                    <!-- Modal -->
+                    <div class="modal fade" th:id="'edit-movie-modal' + ${movie.id}" tabindex="-1"
+                         aria-labelledby="edit-movie-modal-label"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="edit-movie-modal-label">Edit Movie Information</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form th:id="'editModalForm' + ${movie.id}">
+                                        <div class="row form-group">
+                                            <div>
+                                                <label th:for="'edit-movie-title' + ${movie.id}" class="col-form-label">Movie
+                                                    Title:</label>
+                                                <input maxlength="255" type="text" class="form-control"
+                                                       th:id="'edit-movie-title' + ${movie.id}"
+                                                       th:value="${movie.title}"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-sm-6">
+                                                <label th:for="'edit-movie-genre' + ${movie.id}" class="col-form-label">Movie
+                                                    Genre:</label>
+                                                <input maxlength="255" type="text" class="form-control"
+                                                       th:id="'edit-movie-genre' + ${movie.id}"
+                                                       th:value="${movie.genre}"
+                                                       required>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label th:for="'edit-movie-year' + ${movie.id}" class="col-form-label">Movie
+                                                    Year:</label>
+                                                <input maxlength="255" type="text" class="form-control"
+                                                       th:id="'edit-movie-year' + ${movie.id}" th:value="${movie.year}">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-sm-6">
+                                                <label th:for="'edit-movie-director' + ${movie.id}"
+                                                       class="col-form-label">Director:</label>
+                                                <input maxlength="255" type="text" class="form-control"
+                                                       th:id="'edit-movie-director' + ${movie.id}"
+                                                       th:value="${movie.director}"
+                                                       required>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label th:for="'edit-movie-duration' + ${movie.id}"
+                                                       class="col-form-label">Duration:</label>
+                                                <input maxlength="255" type="text" class="form-control"
+                                                       th:id="'edit-movie-duration' + ${movie.id}"
+                                                       th:value="${movie.durationInMinutes}"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div>
+                                                <label th:for="'edit-movie-image' + ${movie.id}" class="col-form-label">Image:</label>
+                                                <input maxlength="255" type="file" class="form-control"
+                                                       th:id="'edit-movie-image' + ${movie.id}"
+                                                       th:value="${movie.image}"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer mt-4">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Edit Movie
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Modal -->
                 </td>
                 <td>
                     <button class="btn btn-danger" th:attr="onclick=|deleteMovie('${movie.id}')|"><i
@@ -108,7 +194,8 @@
                             <div class="row form-group">
                                 <div>
                                     <label for="movie-title" class="col-form-label">Movie Title:</label>
-                                    <input maxlength="255" type="text" class="form-control" id="movie-title" required>
+                                    <input maxlength="255" type="text" class="form-control" id="movie-title"
+                                           required>
                                 </div>
                             </div>
                             <div class="row form-group">

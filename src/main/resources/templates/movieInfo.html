@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>User Movies Home</title>
+    <title>Movie Info</title>
     <script type="text/javascript" src="/webjars/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./static/js/jquery.toast.js" th:src="@{/js/jquery.toast.js}"></script>
@@ -50,56 +50,34 @@
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
-        <h2>Movies</h2>
+        <h2 th:text="${movie.title}"></h2>
         <div class="mb-4">
         </div>
 
-        <!-- Table -->
-        <table class="table table-striped table-responsive-md">
-            <thead>
-            <tr>
-                <th scope="col" class="col-lg-1">Image</th>
-                <th scope="col" class="col-lg-2">Title</th>
-                <th scope="col" class="col-lg-1">Genre</th>
-                <th scope="col" class="col-lg-1">Director</th>
-                <th scope="col" class="col-lg-1">Year</th>
-                <th scope="col" class="col-lg-1"></th>
-                <th scope="col" class="col-lg-1"></th>
-            </tr>
-            </thead>
-
-            <tbody id="licenseTable" th:fragment="tableBody">
-            <tr th:each="movie : ${movies}">
-                <td><img width="120px" height="160px" th:src="${'data:image/jpeg;charset=utf-8;base64,' + movie.image}"
-                         alt=""></td>
-                <td th:text="${movie.title}"></td>
-                <td th:text="${movie.genre}"></td>
-                <td th:text="${movie.director}"></td>
-                <td th:text="${movie.year}"></td>
-                <td>
-                    <a class="btn btn-primary"
-                       th:href="@{/users/{userId}/movies/{movieId}/info(userId=${userId}, movieId=${movie.id})}"><i
-                            class="fa fa-info"></i> View Info</a>
-                </td>
-                <td>
-                     <span th:if="${userMovieWatchedList.^[user.getId()==__${userId}__ && movie.getId() == __${movie.id}__]}">
-                        <button class="btn btn-success" th:attr="onclick=|markMovie('${movie.id}')|"><i
-                                class="fa fa-eye"></i>
-                            Mark as not watched
-                        </button>
-                    </span>
-                    <span th:unless="${userMovieWatchedList.^[user.getId()==__${userId}__ && movie.getId() == __${movie.id}__]}">
-                        <button class="btn btn-warning" th:attr="onclick=|markMovie('${movie.id}')|"><i
-                                class="fa fa-eye"></i>
-                            Mark as watched
-                        </button>
-                    </span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <!-- End Table -->
-
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <img width="360px" height="480px" th:src="${'data:image/jpeg;charset=utf-8;base64,' + movie.image}"
+                         alt="">
+                </div>
+                <div class="col-8">
+                    <div class="h4"> Director: <span th:text="${movie.director}"></span>
+                    </div>
+                    <div class="h4"> Genre: <span th:text="${movie.genre}"></span>
+                    </div>
+                    <div class="h4"> Year: <span th:text="${movie.year}"></span>
+                    </div>
+                    <div class="h4"> Duration in minutes: <span th:text="${movie.durationInMinutes}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-sm-6">
+                <a class="btn btn-primary" th:href="@{/users/{userId}/movies(userId=${userId})}">Go back to movies
+                    list</a>
+            </div>
+        </div>
     </div>
     <!-- End Page Content  -->
 </div>
