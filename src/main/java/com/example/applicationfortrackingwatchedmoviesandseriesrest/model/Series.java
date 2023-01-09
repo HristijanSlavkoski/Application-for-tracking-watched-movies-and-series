@@ -61,6 +61,16 @@ public class Series
 		this.image = image;
 	}
 
+	public Series(String title, String genre, String director, Integer year, Integer numberOfSeasons, String image)
+	{
+		this.title = title;
+		this.genre = genre;
+		this.director = director;
+		this.year = year;
+		this.numberOfSeasons = numberOfSeasons;
+		this.image = image;
+	}
+
 	public Long getId()
 	{
 		return id;

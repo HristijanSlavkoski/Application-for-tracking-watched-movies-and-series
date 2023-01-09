@@ -52,6 +52,16 @@ public class Episode
 		this.releaseDate = releaseDate;
 	}
 
+	public Episode(Series series, Integer seasonNumber, Integer episodeNumber, String title, Integer durationInMinutes, Date releaseDate)
+	{
+		this.series = series;
+		this.seasonNumber = seasonNumber;
+		this.episodeNumber = episodeNumber;
+		this.title = title;
+		this.durationInMinutes = durationInMinutes;
+		this.releaseDate = releaseDate;
+	}
+
 	public Long getId()
 	{
 		return id;
