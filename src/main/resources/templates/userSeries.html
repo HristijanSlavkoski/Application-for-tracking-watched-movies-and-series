@@ -81,20 +81,6 @@
                        th:href="@{/users/{userId}/series/{seriesId}/info(userId=${userId}, seriesId=${seriess.id})}"><i
                             class="fa fa-info"></i> View Info</a>
                 </td>
-                <td>
-                     <span th:if="${userMovieWatchedList.^[user.getId()==__${userId}__ && seriess.getId() == __${seriess.id}__]}">
-                        <button class="btn btn-success" th:attr="onclick=|markSeries('${seriess.id}')|"><i
-                                class="fa fa-eye"></i>
-                            Mark as not watched
-                        </button>
-                    </span>
-                    <span th:unless="${userMovieWatchedList.^[user.getId()==__${userId}__ && seriess.getId() == __${seriess.id}__]}">
-                        <button class="btn btn-warning" th:attr="onclick=|markSeries('${seriess.id}')|"><i
-                                class="fa fa-eye"></i>
-                            Mark as watched
-                        </button>
-                    </span>
-                </td>
             </tr>
             </tbody>
         </table>

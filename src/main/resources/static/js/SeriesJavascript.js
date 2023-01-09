@@ -145,7 +145,7 @@ $('document').ready(function () {
 
     $('[id^="edit-series-btn"]').click(function (event) {
         event.preventDefault();
-        var movieId = event.target.id.substring(14);
+        var movieId = event.target.id.substring(15);
         $('#edit-series-modal' + movieId).modal('show');
     });
 
