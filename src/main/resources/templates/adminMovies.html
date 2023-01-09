@@ -85,7 +85,7 @@
                        th:href="@{/users/{userId}/movies/{movieId}/info(userId=${userId}, movieId=${movie.id})}"><i
                             class="fa fa-info"></i> View Info</a>
                 </td>
-                <td class="text-start">
+                <td>
                     <button class="btn btn-secondary" th:id="'edit-movie-btn' + ${movie.id}">
                         <i
                                 class="fa fa-edit" th:id="'edit-movie-btn' + ${movie.id}"></i> Edit Info
@@ -101,7 +101,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body text-start">
                                     <form th:id="'editModalForm' + ${movie.id}">
                                         <div class="row form-group">
                                             <div>
