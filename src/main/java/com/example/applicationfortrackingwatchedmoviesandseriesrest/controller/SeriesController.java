@@ -1,6 +1,6 @@
 package com.example.applicationfortrackingwatchedmoviesandseriesrest.controller;
 
-import com.example.applicationfortrackingwatchedmoviesandseriesrest.DTO.MovieDTO;
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.DTO.SeriesDTO;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.Role;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.User;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.repository.SeriesRepository;
@@ -47,12 +47,12 @@ public class SeriesController
 			mav.addObject("userRole", "admin");
 		}
 		mav.addObject("userId", userId);
-		mav.addObject("movies", seriesRepository.findAll());
+		mav.addObject("series", seriesRepository.findAll());
 		return mav;
 	}
 
 	@PostMapping("")
-	public ResponseEntity<String> addSeries(@PathVariable Long userId, @RequestBody @Valid MovieDTO movieDTO)
+	public ResponseEntity<String> addSeries(@PathVariable Long userId, @RequestBody @Valid SeriesDTO seriesDTO)
 	{
 		try
 		{

@@ -1,0 +1,246 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Series Home</title>
+    <script type="text/javascript" src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./static/js/jquery.toast.js" th:src="@{/js/jquery.toast.js}"></script>
+    <script type="text/javascript" src="../static/js/SeriesJavascript.js" th:src="@{/js/SeriesJavascript.js}"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="../static/js/jquery.confirmModal.js"
+            th:src="@{/js/jquery.confirmModal.js}"></script>
+    <link rel="stylesheet" href="../static/css/jquery.toast.css" th:href="@{/css/jquery.toast.css}">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<span id="userId" style="display: none" th:text="${userId}"></span>
+
+<!-- Side Bar  -->
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+        <div class="custom-menu">
+        </div>
+        <div class="img bg-wrap text-center py-4">
+            <div class="user-logo">
+                <div class="img" style="background-image: url('/images/background-mini.jpg');"></div>
+                <!--                <h3>NAME OF APPLICATION</h3>-->
+            </div>
+        </div>
+
+        <ul class="list-unstyled components mb-5">
+            <li>
+                <a th:href="@{/users/{userId}/movies(userId=${userId})}"><span
+                        class="fa fa-video-camera mr-3"></span>Movies</a>
+            </li>
+            <li>
+                <a th:href="@{/users/{userId}/series(userId=${userId})}"><span class="fa fa-film mr-3"></span>Series</a>
+            </li>
+            <li>
+                <a href="/auth/logout"><span class="fa fa-sign-out mr-3"></span>Logout</a>
+            </li>
+        </ul>
+    </nav>
+    <!-- End Side Bar  -->
+
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <h2>Series</h2>
+        <div class="mb-4">
+            <a class="btn btn-primary" id="add-new-series-btn">
+                Add new Series
+            </a>
+        </div>
+
+        <!-- Table -->
+        <table class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th scope="col" class="col-lg-1">Image</th>
+                <th scope="col" class="col-lg-2">Title</th>
+                <th scope="col" class="col-lg-1">Genre</th>
+                <th scope="col" class="col-lg-1">Director</th>
+                <th scope="col" class="col-lg-1">Year</th>
+                <th scope="col" class="col-lg-1"></th>
+                <th scope="col" class="col-lg-1"></th>
+                <th scope="col" class="col-lg-1"></th>
+            </tr>
+            </thead>
+
+            <tbody id="licenseTable" th:fragment="tableBody">
+            <tr th:each="seriess : ${series}">
+                <td><img width="120px" height="160px" th:src="${'data:image/jpeg;charset=utf-8;base64,' + seriess.image}"
+                         alt=""></td>
+                <td th:text="${seriess.title}"></td>
+                <td th:text="${seriess.genre}"></td>
+                <td th:text="${seriess.director}"></td>
+                <td th:text="${seriess.year}"></td>
+                <td>
+                    <a class="btn btn-primary"
+                       th:href="@{/users/{userId}/series/{seriesId}/info(userId=${userId}, seriesId=${seriess.id})}"><i
+                            class="fa fa-info"></i> View Info</a>
+                </td>
+                <td>
+                    <button class="btn btn-secondary" th:id="'edit-series-btn' + ${seriess.id}">
+                        <i
+                                class="fa fa-edit" th:id="'edit-series-btn' + ${seriess.id}"></i> Edit Info
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" th:id="'edit-series-modal' + ${seriess.id}" tabindex="-1"
+                         aria-labelledby="edit-series-modal-label"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="edit-series-modal-label">Edit Series Information</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-start">
+                                    <form th:id="'editModalForm' + ${seriess.id}">
+                                        <div class="row form-group">
+                                            <div>
+                                                <label th:for="'edit-series-title' + ${seriess.id}" class="col-form-label">Series
+                                                    Title:</label>
+                                                <input maxlength="255" type="text" class="form-control"
+                                                       th:id="'edit-series-title' + ${seriess.id}"
+                                                       th:value="${seriess.title}"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-sm-6">
+                                                <label th:for="'edit-series-genre' + ${seriess.id}" class="col-form-label">Series
+                                                    Genre:</label>
+                                                <input maxlength="255" type="text" class="form-control"
+                                                       th:id="'edit-series-genre' + ${seriess.id}"
+                                                       th:value="${seriess.genre}"
+                                                       required>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label th:for="'edit-series-year' + ${seriess.id}" class="col-form-label">Series
+                                                    Year:</label>
+                                                <input maxlength="255" type="text" class="form-control"
+                                                       th:id="'edit-series-year' + ${seriess.id}" th:value="${seriess.year}">
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-sm-6">
+                                                <label th:for="'edit-series-director' + ${seriess.id}"
+                                                       class="col-form-label">Director:</label>
+                                                <input maxlength="255" type="text" class="form-control"
+                                                       th:id="'edit-series-director' + ${seriess.id}"
+                                                       th:value="${seriess.director}"
+                                                       required>
+                                            </div>
+<!--                                            <div class="col-sm-6">-->
+<!--                                                <label th:for="'edit-movie-duration' + ${movie.id}"-->
+<!--                                                       class="col-form-label">Duration:</label>-->
+<!--                                                <input maxlength="255" type="text" class="form-control"-->
+<!--                                                       th:id="'edit-movie-duration' + ${movie.id}"-->
+<!--                                                       th:value="${movie.durationInMinutes}"-->
+<!--                                                       required>-->
+<!--                                            </div>-->
+                                        </div>
+                                        <div class="row form-group">
+                                            <div>
+                                                <label th:for="'edit-series-image' + ${seriess.id}" class="col-form-label">Image:</label>
+                                                <input maxlength="255" type="file" class="form-control"
+                                                       th:id="'edit-series-image' + ${seriess.id}"
+                                                       th:value="${seriess.image}"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer mt-4">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Edit Series
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Modal -->
+                </td>
+                <td>
+                    <button class="btn btn-danger" th:attr="onclick=|deleteSeries('${seriess.id}')|"><i
+                            class="fa fa-trash"></i>
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- End Table -->
+        <!-- Modal -->
+        <div class="modal fade" id="new-series-modal" tabindex="-1" aria-labelledby="new-series-modal-label"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="new-series-modal-label">New Series Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modalForm">
+                            <div class="row form-group">
+                                <div>
+                                    <label for="series-title" class="col-form-label">Series Title:</label>
+                                    <input maxlength="255" type="text" class="form-control" id="series-title"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-6">
+                                    <label for="series-genre" class="col-form-label">Series Genre:</label>
+                                    <input maxlength="255" type="text" class="form-control" id="series-genre"
+                                           required>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="series-year" class="col-form-label">Series Year:</label>
+                                    <input maxlength="255" type="text" class="form-control" id="series-year">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-6">
+                                    <label for="series-director" class="col-form-label">Director:</label>
+                                    <input maxlength="255" type="text" class="form-control" id="series-director"
+                                           required>
+                                </div>
+<!--                                <div class="col-sm-6">-->
+<!--                                    <label for="movie-duration" class="col-form-label">Duration:</label>-->
+<!--                                    <input maxlength="255" type="text" class="form-control" id="movie-duration"-->
+<!--                                           required>-->
+<!--                                </div>-->
+                            </div>
+                            <div class="row form-group">
+                                <div>
+                                    <label for="series-image" class="col-form-label">Image:</label>
+                                    <input maxlength="255" type="file" class="form-control" id="series-image"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="modal-footer mt-4">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add Series
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+    </div>
+    <!-- End Page Content  -->
+</div>
+</body>
+</html>
