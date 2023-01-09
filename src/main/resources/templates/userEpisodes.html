@@ -2,11 +2,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Movie Info</title>
+    <title>Admin Episodes Home</title>
     <script type="text/javascript" src="/webjars/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./static/js/jquery.toast.js" th:src="@{/js/jquery.toast.js}"></script>
-    <script type="text/javascript" src="../static/js/MovieJavascript.js" th:src="@{/js/MovieJavascript.js}"></script>
+    <script type="text/javascript" src="../static/js/EpisodeJavascript.js"
+            th:src="@{/js/EpisodeJavascript.js}"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="../static/js/jquery.confirmModal.js"
@@ -50,34 +51,50 @@
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
-        <h2 th:text="${movie.title}"></h2>
+        <h2>Series</h2>
         <div class="mb-4">
+            <a class="btn btn-primary" id="add-new-episode-btn">
+                Add New Episodes
+            </a>
         </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-4">
-                    <img width="360px" height="480px" th:src="${'data:image/jpeg;charset=utf-8;base64,' + movie.image}"
-                         alt="">
-                </div>
-                <div class="col-8">
-                    <div class="h4"> Director: <span th:text="${movie.director}"></span>
-                    </div>
-                    <div class="h4"> Genre: <span th:text="${movie.genre}"></span>
-                    </div>
-                    <div class="h4"> Year: <span th:text="${movie.year}"></span>
-                    </div>
-                    <div class="h4"> Duration in minutes: <span th:text="${movie.durationInMinutes}"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-sm-6">
-                <a class="btn btn-primary" th:href="@{/users/{userId}/movies(userId=${userId})}">Go back to movies
-                    list</a>
-            </div>
-        </div>
+        <!-- Table -->
+        <table class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th scope="col" class="col-lg-2">Title</th>
+                <th scope="col" class="col-lg-1">Season number</th>
+                <th scope="col" class="col-lg-1">Episode number</th>
+                <th scope="col" class="col-lg-1">Release date</th>
+                <th scope="col" class="col-lg-1">Duration in minutes</th>
+                <th scope="col" class="col-lg-1"></th>
+                <th scope="col" class="col-lg-1"></th>
+            </tr>
+            </thead>
+
+            <tbody id="licenseTable" th:fragment="tableBody">
+            <tr th:each="episode : ${episodes}">
+                <td th:text="${episode.title}"></td>
+                <td th:text="${episode.seasonNumber}"></td>
+                <td th:text="${episode.episodeNumber}"></td>
+                <td th:text="${episode.releaseDate}"></td>
+                <td th:text="${episode.durationInMinutes}"></td>
+                <td>
+                    <a class="btn btn-primary"
+                       th:href="@{/users/{userId}/series/{seriesId}/episodes/{episodeId}/info(userId=${userId}, seriesId=${episode.series.id}, episodeId=${episode.id})}"><i
+                            class="fa fa-info"></i> View Info</a>
+                </td>
+                <td>
+                    <!--                    TODO: MARK AS WATCHED-->
+                    <!--                    <button class="btn btn-danger" th:attr="onclick=|deleteEpisode('${episode.id}')|"><i-->
+                    <!--                            class="fa fa-trash"></i>-->
+                    <!--                        Delete-->
+                    <!--                    </button>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- End Table -->
     </div>
     <!-- End Page Content  -->
 </div>

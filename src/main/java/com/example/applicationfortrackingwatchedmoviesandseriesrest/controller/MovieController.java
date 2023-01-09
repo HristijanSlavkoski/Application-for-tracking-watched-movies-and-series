@@ -112,7 +112,7 @@ public class MovieController
 	}
 
 	@GetMapping("/{movieId}/info")
-	public ModelAndView getAllMovies(@PathVariable Long userId, @PathVariable Long movieId)
+	public ModelAndView getMovie(@PathVariable Long userId, @PathVariable Long movieId)
 	{
 		ModelAndView mav;
 		mav = new ModelAndView("movieInfo");

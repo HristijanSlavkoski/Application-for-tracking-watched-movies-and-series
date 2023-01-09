@@ -62,24 +62,26 @@
                 <th scope="col" class="col-lg-2">Title</th>
                 <th scope="col" class="col-lg-1">Genre</th>
                 <th scope="col" class="col-lg-1">Director</th>
+                <th scope="col" class="col-lg-1">Number of seasons</th>
                 <th scope="col" class="col-lg-1">Year</th>
-                <th scope="col" class="col-lg-1"></th>
                 <th scope="col" class="col-lg-1"></th>
             </tr>
             </thead>
 
             <tbody id="licenseTable" th:fragment="tableBody">
             <tr th:each="seriess : ${series}">
-                <td><img width="120px" height="160px" th:src="${'data:image/jpeg;charset=utf-8;base64,' + seriess.image}"
+                <td><img width="120px" height="160px"
+                         th:src="${'data:image/jpeg;charset=utf-8;base64,' + seriess.image}"
                          alt=""></td>
                 <td th:text="${seriess.title}"></td>
                 <td th:text="${seriess.genre}"></td>
                 <td th:text="${seriess.director}"></td>
+                <td th:text="${seriess.numberOfSeasons}"></td>
                 <td th:text="${seriess.year}"></td>
                 <td>
                     <a class="btn btn-primary"
-                       th:href="@{/users/{userId}/series/{seriesId}/info(userId=${userId}, seriesId=${seriess.id})}"><i
-                            class="fa fa-info"></i> View Info</a>
+                       th:href="@{/users/{userId}/series/{seriesId}/episodes(userId=${userId}, seriesId=${seriess.id})}"><i
+                            class="fa fa-info"></i> View Episodes</a>
                 </td>
             </tr>
             </tbody>

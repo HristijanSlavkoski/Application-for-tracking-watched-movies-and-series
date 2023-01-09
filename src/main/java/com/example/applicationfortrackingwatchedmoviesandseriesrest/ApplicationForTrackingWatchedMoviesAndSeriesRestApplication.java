@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -96,6 +97,9 @@ public class ApplicationForTrackingWatchedMoviesAndSeriesRestApplication
 
 			if (seriesRepository.count() == 0 && episodeRepository.count() == 0)
 			{
+				// Because Date(int, int, int) is deprecated, we need to ues Calendar, where the year is (actual year - 1900):
+				// As of JDK version 1.1, replaced by Calendar.set(year + 1900, month, date) or GregorianCalendar(year + 1900, month, date).
+
 				// Game of Thrones
 				String fileName = "/GameOfThrones.jpg";
 				URL fileUrl = classLoader.getResource("static/images/" + fileName);
@@ -107,11 +111,11 @@ public class ApplicationForTrackingWatchedMoviesAndSeriesRestApplication
 				seriesRepository.save(gameOfThrones);
 
 				List<Episode> gameOfThronesEpisodes = new ArrayList<>();
-				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 1, "Winter Is Coming", 60, new Date(2011, 4, 17)));
-				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 2, "The Kingsroad", 60, new Date(2011, 4, 24)));
-				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 3, "Lord Snow", 60, new Date(2011, 5, 1)));
-				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 4, "Cripples, Bastards, and Broken Things", 60, new Date(2011, 5, 8)));
-				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 5, "The Wolf and the Lion", 60, new Date(2011, 5, 15)));
+				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 1, "Winter Is Coming", 60, new Date(111, Calendar.MAY, 17)));
+				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 2, "The Kingsroad", 60, new Date(2011111, Calendar.MAY, 24)));
+				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 3, "Lord Snow", 60, new Date(111, Calendar.JUNE, 1)));
+				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 4, "Cripples, Bastards, and Broken Things", 60, new Date(111, Calendar.JUNE, 8)));
+				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 5, "The Wolf and the Lion", 60, new Date(111, Calendar.JUNE, 15)));
 
 				episodeRepository.saveAll(gameOfThronesEpisodes);
 
@@ -126,11 +130,11 @@ public class ApplicationForTrackingWatchedMoviesAndSeriesRestApplication
 				seriesRepository.save(strangerThings);
 
 				List<Episode> strangerThingsEpisodes = new ArrayList<>();
-				strangerThingsEpisodes.add(new Episode(strangerThings, 1, 1, "Chapter One: The Vanishing of Will Byers", 50, new Date(2016, 7, 15)));
-				strangerThingsEpisodes.add(new Episode(strangerThings, 1, 2, "Chapter Two: The Weirdo on Maple Street", 50, new Date(2016, 7, 15)));
-				strangerThingsEpisodes.add(new Episode(strangerThings, 1, 3, "Chapter Three: Holly, Jolly", 50, new Date(2016, 7, 15)));
-				strangerThingsEpisodes.add(new Episode(strangerThings, 1, 4, "Chapter Four: The Body", 50, new Date(2016, 7, 15)));
-				strangerThingsEpisodes.add(new Episode(strangerThings, 1, 5, "Chapter Five: The Flea and the Acrobat", 50, new Date(2016, 7, 15)));
+				strangerThingsEpisodes.add(new Episode(strangerThings, 1, 1, "Chapter One: The Vanishing of Will Byers", 50, new Date(116, Calendar.AUGUST, 15)));
+				strangerThingsEpisodes.add(new Episode(strangerThings, 1, 2, "Chapter Two: The Weirdo on Maple Street", 50, new Date(116, Calendar.AUGUST, 15)));
+				strangerThingsEpisodes.add(new Episode(strangerThings, 1, 3, "Chapter Three: Holly, Jolly", 50, new Date(116, Calendar.AUGUST, 15)));
+				strangerThingsEpisodes.add(new Episode(strangerThings, 1, 4, "Chapter Four: The Body", 50, new Date(116, Calendar.AUGUST, 15)));
+				strangerThingsEpisodes.add(new Episode(strangerThings, 1, 5, "Chapter Five: The Flea and the Acrobat", 50, new Date(116, Calendar.AUGUST, 15)));
 
 				episodeRepository.saveAll(strangerThingsEpisodes);
 
@@ -145,11 +149,11 @@ public class ApplicationForTrackingWatchedMoviesAndSeriesRestApplication
 				seriesRepository.save(theOffice);
 
 				List<Episode> theOfficeEpisodes = new ArrayList<>();
-				theOfficeEpisodes.add(new Episode(theOffice, 1, 1, "Pilot", 30, new Date(2005, 3, 24)));
-				theOfficeEpisodes.add(new Episode(theOffice, 1, 2, "Diversity Day", 30, new Date(2005, 3, 31)));
-				theOfficeEpisodes.add(new Episode(theOffice, 1, 3, "Health Care", 30, new Date(2005, 4, 7)));
-				theOfficeEpisodes.add(new Episode(theOffice, 1, 4, "The Alliance", 30, new Date(2005, 4, 14)));
-				theOfficeEpisodes.add(new Episode(theOffice, 1, 5, "Basketball", 30, new Date(2005, 4, 21)));
+				theOfficeEpisodes.add(new Episode(theOffice, 1, 1, "Pilot", 30, new Date(105, Calendar.APRIL, 24)));
+				theOfficeEpisodes.add(new Episode(theOffice, 1, 2, "Diversity Day", 30, new Date(105, Calendar.APRIL, 31)));
+				theOfficeEpisodes.add(new Episode(theOffice, 1, 3, "Health Care", 30, new Date(105, Calendar.MAY, 7)));
+				theOfficeEpisodes.add(new Episode(theOffice, 1, 4, "The Alliance", 30, new Date(105, Calendar.MAY, 14)));
+				theOfficeEpisodes.add(new Episode(theOffice, 1, 5, "Basketball", 30, new Date(105, Calendar.MAY, 21)));
 
 				episodeRepository.saveAll(theOfficeEpisodes);
 
@@ -164,11 +168,11 @@ public class ApplicationForTrackingWatchedMoviesAndSeriesRestApplication
 				seriesRepository.save(theSopranos);
 
 				List<Episode> theSopranosEpisodes = new ArrayList<>();
-				theSopranosEpisodes.add(new Episode(theSopranos, 1, 1, "The Sopranos", 75, new Date(1999, 1, 10)));
-				theSopranosEpisodes.add(new Episode(theSopranos, 1, 2, "46 Long", 75, new Date(1999, 1, 17)));
-				theSopranosEpisodes.add(new Episode(theSopranos, 1, 3, "Denial, Anger, Acceptance", 75, new Date(1999, 1, 24)));
-				theSopranosEpisodes.add(new Episode(theSopranos, 1, 4, "Meadowlands", 75, new Date(1999, 1, 31)));
-				theSopranosEpisodes.add(new Episode(theSopranos, 1, 5, "College", 75, new Date(1999, 2, 7)));
+				theSopranosEpisodes.add(new Episode(theSopranos, 1, 1, "The Sopranos", 75, new Date(99, Calendar.JANUARY, 10)));
+				theSopranosEpisodes.add(new Episode(theSopranos, 1, 2, "46 Long", 75, new Date(99, Calendar.JANUARY, 17)));
+				theSopranosEpisodes.add(new Episode(theSopranos, 1, 3, "Denial, Anger, Acceptance", 75, new Date(99, Calendar.JANUARY, 24)));
+				theSopranosEpisodes.add(new Episode(theSopranos, 1, 4, "Meadowlands", 75, new Date(99, Calendar.JANUARY, 31)));
+				theSopranosEpisodes.add(new Episode(theSopranos, 1, 5, "College", 75, new Date(99, Calendar.FEBRUARY, 7)));
 
 				episodeRepository.saveAll(theSopranosEpisodes);
 
@@ -183,11 +187,11 @@ public class ApplicationForTrackingWatchedMoviesAndSeriesRestApplication
 				seriesRepository.save(theMandalorian);
 
 				List<Episode> theMandalorianEpisodes = new ArrayList<>();
-				theMandalorianEpisodes.add(new Episode(theMandalorian, 1, 1, "Chapter 1: The Mandalorian", 35, new Date(2019, 11, 12)));
-				theMandalorianEpisodes.add(new Episode(theMandalorian, 1, 2, "Chapter 2: The Child", 35, new Date(2019, 11, 15)));
-				theMandalorianEpisodes.add(new Episode(theMandalorian, 1, 3, "Chapter 3: The Sin", 35, new Date(2019, 11, 22)));
-				theMandalorianEpisodes.add(new Episode(theMandalorian, 1, 4, "Chapter 4: Sanctuary", 35, new Date(2019, 11, 29)));
-				theMandalorianEpisodes.add(new Episode(theMandalorian, 1, 5, "Chapter 5: The Gunslinger", 35, new Date(2019, 12, 6)));
+				theMandalorianEpisodes.add(new Episode(theMandalorian, 1, 1, "Chapter 1: The Mandalorian", 35, new Date(119, Calendar.NOVEMBER, 12)));
+				theMandalorianEpisodes.add(new Episode(theMandalorian, 1, 2, "Chapter 2: The Child", 35, new Date(119, Calendar.NOVEMBER, 15)));
+				theMandalorianEpisodes.add(new Episode(theMandalorian, 1, 3, "Chapter 3: The Sin", 35, new Date(119, Calendar.NOVEMBER, 22)));
+				theMandalorianEpisodes.add(new Episode(theMandalorian, 1, 4, "Chapter 4: Sanctuary", 35, new Date(119, Calendar.NOVEMBER, 29)));
+				theMandalorianEpisodes.add(new Episode(theMandalorian, 1, 5, "Chapter 5: The Gunslinger", 35, new Date(119, Calendar.DECEMBER, 6)));
 
 				episodeRepository.saveAll(theMandalorianEpisodes);
 
@@ -202,11 +206,11 @@ public class ApplicationForTrackingWatchedMoviesAndSeriesRestApplication
 				seriesRepository.save(westworld);
 
 				List<Episode> westworldEpisodes = new ArrayList<>();
-				westworldEpisodes.add(new Episode(westworld, 1, 1, "The Original", 60, new Date(2016, 10, 2)));
-				westworldEpisodes.add(new Episode(westworld, 1, 2, "Chestnut", 60, new Date(2016, 10, 9)));
-				westworldEpisodes.add(new Episode(westworld, 1, 3, "The Stray", 60, new Date(2016, 10, 16)));
-				westworldEpisodes.add(new Episode(westworld, 1, 4, "Dissonance Theory", 60, new Date(2016, 10, 23)));
-				westworldEpisodes.add(new Episode(westworld, 1, 5, "Contrapasso", 60, new Date(2016, 10, 30)));
+				westworldEpisodes.add(new Episode(westworld, 1, 1, "The Original", 60, new Date(116, Calendar.OCTOBER, 2)));
+				westworldEpisodes.add(new Episode(westworld, 1, 2, "Chestnut", 60, new Date(116, Calendar.OCTOBER, 9)));
+				westworldEpisodes.add(new Episode(westworld, 1, 3, "The Stray", 60, new Date(116, Calendar.OCTOBER, 16)));
+				westworldEpisodes.add(new Episode(westworld, 1, 4, "Dissonance Theory", 60, new Date(116, Calendar.OCTOBER, 23)));
+				westworldEpisodes.add(new Episode(westworld, 1, 5, "Contrapasso", 60, new Date(116, Calendar.OCTOBER, 30)));
 
 				episodeRepository.saveAll(westworldEpisodes);
 			}

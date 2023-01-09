@@ -50,31 +50,34 @@
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
-        <h2 th:text="${movie.title}"></h2>
+        <h2 th:text="${episode.title}"></h2>
         <div class="mb-4">
         </div>
 
         <div class="container">
             <div class="row">
                 <div class="col-4">
-                    <img width="360px" height="480px" th:src="${'data:image/jpeg;charset=utf-8;base64,' + movie.image}"
+                    <img width="360px" height="480px"
+                         th:src="${'data:image/jpeg;charset=utf-8;base64,' + episode.series.image}"
                          alt="">
                 </div>
                 <div class="col-8">
-                    <div class="h4"> Director: <span th:text="${movie.director}"></span>
+                    <div class="h4"> Season number: <span th:text="${episode.seasonNumber}"></span>
                     </div>
-                    <div class="h4"> Genre: <span th:text="${movie.genre}"></span>
+                    <div class="h4"> Episode number: <span th:text="${episode.episodeNumber}"></span>
                     </div>
-                    <div class="h4"> Year: <span th:text="${movie.year}"></span>
+                    <div class="h4"> Release date: <span th:text="${episode.releaseDate}"></span>
                     </div>
-                    <div class="h4"> Duration in minutes: <span th:text="${movie.durationInMinutes}"></span>
+                    <div class="h4"> Duration in minutes: <span th:text="${episode.durationInMinutes}"></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-sm-6">
-                <a class="btn btn-primary" th:href="@{/users/{userId}/movies(userId=${userId})}">Go back to movies
+                <a class="btn btn-primary"
+                   th:href="@{/users/{userId}/series/{seriesId}/episodes(userId=${userId}, seriesId=${episode.series.id})}">Go
+                    back to episodes list
                     list</a>
             </div>
         </div>
