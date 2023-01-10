@@ -1,5 +1,6 @@
 package com.example.applicationfortrackingwatchedmoviesandseriesrest.service;
 
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.DTO.UserMovieEpisodeWatchedDTO;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.UserMovieWatched;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.repository.UserMovieWatchedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +23,28 @@ public class UserMovieWatchedServiceImpl implements UserMovieWatchedService
 
 	@Override
 	@Transactional
-	public void markMovieAsWatchedOrNotWatched(Long userId, Long movieId)
+	public void markMovieAsWatched(Long userId, Long movieId, UserMovieEpisodeWatchedDTO userMovieEpisodeWatchedDTO)
+	{
+		String queryToInsert = "INSERT INTO user_movie_watched(user_id,movie_id,date_watched) VALUES (?1,?2, ?3)";
+		Query nativeQueryToInsert = entityManager.createNativeQuery(queryToInsert);
+		nativeQueryToInsert.setParameter(1, userId);
+		nativeQueryToInsert.setParameter(2, movieId);
+		nativeQueryToInsert.setParameter(3, userMovieEpisodeWatchedDTO.getDateWatched());
+		nativeQueryToInsert.executeUpdate();
+	}
+
+	@Override
+	@Transactional
+	public void markMovieAsNotWatched(Long userId, Long movieId)
 	{
 		Optional<UserMovieWatched> userMovieWatched = userMovieWatchedRepository.findByUserAndMovie(userId, movieId);
 		if (userMovieWatched.isPresent())
 		{
-			// The User has already watched the movie, mark it as not watched
 			String queryDeleteRow = "DELETE FROM user_movie_watched WHERE user_id=?1 AND movie_id=?2";
 			Query nativeQueryDeleteRow = entityManager.createNativeQuery(queryDeleteRow);
 			nativeQueryDeleteRow.setParameter(1, userId);
 			nativeQueryDeleteRow.setParameter(2, movieId);
 			nativeQueryDeleteRow.executeUpdate();
-		} else
-		{
-			// The User hasn't watched the movie, mark it as watched
-			String queryToInsert = "INSERT INTO user_movie_watched(user_id,movie_id) VALUES (?1,?2)";
-			Query nativeQueryToInsert = entityManager.createNativeQuery(queryToInsert);
-			nativeQueryToInsert.setParameter(1, userId);
-			nativeQueryToInsert.setParameter(2, movieId);
-			nativeQueryToInsert.executeUpdate();
 		}
 	}
 

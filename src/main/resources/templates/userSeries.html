@@ -52,6 +52,10 @@
     <div id="content" class="p-4 p-md-5 pt-5">
         <h2>Series</h2>
         <div class="mb-4">
+            <a class="btn btn-primary"
+               th:href="@{/users/{userId}/series/last-watched(userId=${userId})}">
+                Click to see your last watched episode
+            </a>
         </div>
 
         <!-- Table -->

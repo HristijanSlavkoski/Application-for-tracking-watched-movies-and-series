@@ -1,10 +1,13 @@
 package com.example.applicationfortrackingwatchedmoviesandseriesrest.controller;
 
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.DTO.EpisodeDTO;
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.DTO.UserMovieEpisodeWatchedDTO;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.Episode;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.Role;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.User;
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.UserEpisodeWatched;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.service.EpisodeService;
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.service.UserEpisodeWatchedService;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -32,8 +36,8 @@ public class EpisodeController
 	@Autowired
 	private UserService userService;
 
-	//TODO:
-	//UserEpisodeWatchedService autowired
+	@Autowired
+	private UserEpisodeWatchedService userEpisodeWatchedService;
 
 	@GetMapping("")
 	public ModelAndView getAllEpisodesForSeries(@PathVariable Long userId, @PathVariable Long seriesId)
@@ -49,9 +53,8 @@ public class EpisodeController
 			mav = new ModelAndView("adminEpisodes");
 			mav.addObject("userRole", "admin");
 		}
-		//TODO:
-		//List<UserMovieWatched> userMovieWatchedList = userMovieWatchedService.getAllRecordsForUserMovieWatched();
-		//mav.addObject("userMovieWatchedList", userMovieWatchedList);
+		List<UserEpisodeWatched> userEpisodeWatchedList = userEpisodeWatchedService.getAllRecordsForUserEpisodeWatched();
+		mav.addObject("userEpisodeWatchedList", userEpisodeWatchedList);
 		mav.addObject("userId", userId);
 		mav.addObject("episodes", episodeService.getAllEpisodesForSeries(seriesId));
 		return mav;
@@ -83,19 +86,31 @@ public class EpisodeController
 		}
 	}
 
-	//TODO:
-//	@PostMapping("/{episodeId}/mark")
-//	public ResponseEntity<String> markMovieAsWatchedOrNotWatched(@PathVariable Long userId, @PathVariable Long movieId)
-//	{
-//		try
-//		{
-//			userMovieWatchedService.markMovieAsWatchedOrNotWatched(userId, movieId);
-//			return new ResponseEntity<String>("\"Success\"", HttpStatus.OK);
-//		} catch (Exception e)
-//		{
-//			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//		}
-//	}
+	@PostMapping("/{episodeId}/mark")
+	public ResponseEntity<String> markEpisodeAsWatched(@PathVariable Long userId, @PathVariable Long seriesId, @PathVariable Long episodeId, @RequestBody UserMovieEpisodeWatchedDTO userMovieEpisodeWatchedDTO)
+	{
+		try
+		{
+			userEpisodeWatchedService.markEpisodeAsWatched(userId, episodeId, userMovieEpisodeWatchedDTO);
+			return new ResponseEntity<String>("\"Success\"", HttpStatus.OK);
+		} catch (Exception e)
+		{
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PostMapping("/{episodeId}/unmark")
+	public ResponseEntity<String> markEpisodeAsNotWatched(@PathVariable Long userId, @PathVariable Long seriesId, @PathVariable Long episodeId)
+	{
+		try
+		{
+			userEpisodeWatchedService.markEpisodeAsNotWatched(userId, episodeId);
+			return new ResponseEntity<String>("\"Success\"", HttpStatus.OK);
+		} catch (Exception e)
+		{
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	@PutMapping("/{episodeId}/edit")
 	public ResponseEntity<String> editEpisode(@PathVariable Long userId, @PathVariable Long seriesId, @PathVariable Long episodeId, @RequestBody @Valid EpisodeDTO episodeDTO)
@@ -117,6 +132,21 @@ public class EpisodeController
 		mav = new ModelAndView("episodeInfo");
 		mav.addObject("userId", userId);
 		Episode episode = episodeService.getEpisodeById(episodeId);
+		if (episode == null)
+		{
+			throw new RuntimeException("Episode does not exist");
+		}
+		mav.addObject("episode", episode);
+		return mav;
+	}
+
+	@GetMapping("/last-watched-for-series")
+	public ModelAndView getLastWatchedEpisodeForSeries(@PathVariable Long userId, @PathVariable Long seriesId)
+	{
+		ModelAndView mav;
+		mav = new ModelAndView("episodeInfo");
+		mav.addObject("userId", userId);
+		Episode episode = userEpisodeWatchedService.getLastWatchedEpisodeForUserForSeries(userId, seriesId);
 		if (episode == null)
 		{
 			throw new RuntimeException("Episode does not exist");

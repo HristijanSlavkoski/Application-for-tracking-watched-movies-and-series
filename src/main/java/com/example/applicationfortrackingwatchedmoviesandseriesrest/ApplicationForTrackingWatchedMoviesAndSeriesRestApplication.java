@@ -112,7 +112,7 @@ public class ApplicationForTrackingWatchedMoviesAndSeriesRestApplication
 
 				List<Episode> gameOfThronesEpisodes = new ArrayList<>();
 				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 1, "Winter Is Coming", 60, new Date(111, Calendar.MAY, 17)));
-				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 2, "The Kingsroad", 60, new Date(2011111, Calendar.MAY, 24)));
+				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 2, "The Kingsroad", 60, new Date(111, Calendar.MAY, 24)));
 				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 3, "Lord Snow", 60, new Date(111, Calendar.JUNE, 1)));
 				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 4, "Cripples, Bastards, and Broken Things", 60, new Date(111, Calendar.JUNE, 8)));
 				gameOfThronesEpisodes.add(new Episode(gameOfThrones, 1, 5, "The Wolf and the Lion", 60, new Date(111, Calendar.JUNE, 15)));

@@ -51,10 +51,11 @@
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
-        <h2>Series</h2>
+        <h2 th:text="${episodes[0].series.title}"></h2>
         <div class="mb-4">
-            <a class="btn btn-primary" id="add-new-episode-btn">
-                Add New Episodes
+            <a class="btn btn-primary"
+               th:href="@{/users/{userId}/series/{seriesId}/episodes/last-watched-for-series(userId=${userId}, seriesId=${episodes[0].series.id})}">
+                Click to see your last watched episode of this series
             </a>
         </div>
 
@@ -85,11 +86,19 @@
                             class="fa fa-info"></i> View Info</a>
                 </td>
                 <td>
-                    <!--                    TODO: MARK AS WATCHED-->
-                    <!--                    <button class="btn btn-danger" th:attr="onclick=|deleteEpisode('${episode.id}')|"><i-->
-                    <!--                            class="fa fa-trash"></i>-->
-                    <!--                        Delete-->
-                    <!--                    </button>-->
+                    <span th:if="${userEpisodeWatchedList.^[user.getId()==__${userId}__ && episode.getId() == __${episode.id}__]}">
+                        <button class="btn btn-success" th:attr="onclick=|unMarkEpisode('${episode.id}')|"><i
+                                class="fa fa-eye"></i>
+                            Mark as not watched
+                        </button>
+                    </span>
+                    <span th:unless="${userEpisodeWatchedList.^[user.getId()==__${userId}__ && episode.getId() == __${episode.id}__]}">
+                        <input type="date" th:id="'dateInput' + ${episode.id}" required>
+                        <button class="btn btn-warning mt-2" th:attr="onclick=|markEpisode('${episode.id}')|"><i
+                                class="fa fa-eye"></i>
+                            Mark as watched
+                        </button>
+                    </span>
                 </td>
             </tr>
             </tbody>

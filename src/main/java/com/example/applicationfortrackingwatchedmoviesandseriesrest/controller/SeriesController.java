@@ -1,10 +1,12 @@
 package com.example.applicationfortrackingwatchedmoviesandseriesrest.controller;
 
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.DTO.SeriesDTO;
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.Episode;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.Role;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.Series;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.User;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.service.SeriesService;
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.service.UserEpisodeWatchedService;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,13 +28,14 @@ import java.util.Optional;
 @RequestMapping(value = "/users/{userId}/series")
 public class SeriesController
 {
-	//TODO:
-	//da se smeni od repository vo service
 	@Autowired
 	private SeriesService seriesService;
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private UserEpisodeWatchedService userEpisodeWatchedService;
 
 	@GetMapping("")
 	public ModelAndView getAllSeries(@PathVariable Long userId)
@@ -104,6 +107,21 @@ public class SeriesController
 			throw new RuntimeException("Series does not exist");
 		}
 		mav.addObject("series", series);
+		return mav;
+	}
+
+	@GetMapping("/last-watched")
+	public ModelAndView getLastWatchedEpisode(@PathVariable Long userId)
+	{
+		ModelAndView mav;
+		mav = new ModelAndView("episodeInfo");
+		mav.addObject("userId", userId);
+		Episode episode = userEpisodeWatchedService.getLastWatchedEpisodeForUser(userId);
+		if (episode == null)
+		{
+			throw new RuntimeException("Episode does not exist");
+		}
+		mav.addObject("episode", episode);
 		return mav;
 	}
 }

@@ -1,6 +1,7 @@
 package com.example.applicationfortrackingwatchedmoviesandseriesrest.controller;
 
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.DTO.MovieDTO;
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.DTO.UserMovieEpisodeWatchedDTO;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.Movie;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.Role;
 import com.example.applicationfortrackingwatchedmoviesandseriesrest.model.User;
@@ -86,11 +87,24 @@ public class MovieController
 	}
 
 	@PostMapping("/{movieId}/mark")
-	public ResponseEntity<String> markMovieAsWatchedOrNotWatched(@PathVariable Long userId, @PathVariable Long movieId)
+	public ResponseEntity<String> markMovieAsWatched(@PathVariable Long userId, @PathVariable Long movieId, @RequestBody UserMovieEpisodeWatchedDTO userMovieEpisodeWatchedDTO)
 	{
 		try
 		{
-			userMovieWatchedService.markMovieAsWatchedOrNotWatched(userId, movieId);
+			userMovieWatchedService.markMovieAsWatched(userId, movieId, userMovieEpisodeWatchedDTO);
+			return new ResponseEntity<String>("\"Success\"", HttpStatus.OK);
+		} catch (Exception e)
+		{
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PostMapping("/{movieId}/unmark")
+	public ResponseEntity<String> markMovieAsNotWatched(@PathVariable Long userId, @PathVariable Long movieId)
+	{
+		try
+		{
+			userMovieWatchedService.markMovieAsNotWatched(userId, movieId);
 			return new ResponseEntity<String>("\"Success\"", HttpStatus.OK);
 		} catch (Exception e)
 		{

@@ -12,9 +12,9 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_movie_watched")
-@IdClass(UserMovieWatchedPrimaryKey.class)
-public class UserMovieWatched
+@Table(name = "user_episode_watched")
+@IdClass(UserEpisodeWatchedPrimaryKey.class)
+public class UserEpisodeWatched
 {
 	@Id
 	@ManyToOne
@@ -23,21 +23,21 @@ public class UserMovieWatched
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "movie_id", nullable = false)
-	private Movie movie;
+	@JoinColumn(name = "episode_id", nullable = false)
+	private Episode episode;
 
 	@Column(name = "date_watched")
 	@Temporal(TemporalType.DATE)
 	private Date dateWatched;
 
-	public UserMovieWatched()
+	public UserEpisodeWatched()
 	{
 	}
 
-	public UserMovieWatched(User user, Movie movie, Date dateWatched)
+	public UserEpisodeWatched(User user, Episode episode, Date dateWatched)
 	{
 		this.user = user;
-		this.movie = movie;
+		this.episode = episode;
 		this.dateWatched = dateWatched;
 	}
 
@@ -51,14 +51,14 @@ public class UserMovieWatched
 		this.user = user;
 	}
 
-	public Movie getMovie()
+	public Episode getEpisode()
 	{
-		return movie;
+		return episode;
 	}
 
-	public void setMovie(Movie movie)
+	public void setEpisode(Episode episode)
 	{
-		this.movie = movie;
+		this.episode = episode;
 	}
 
 	public Date getDateWatched()
