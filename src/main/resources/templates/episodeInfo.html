@@ -76,10 +76,18 @@
         </div>
         <div class="row mt-2">
             <div class="col-sm-6">
-                <a class="btn btn-primary"
-                   th:href="@{/users/{userId}/series/{seriesId}/episodes(userId=${userId}, seriesId=${episode.series.id})}">Go
-                    back to episodes list
-                    list</a>
+                <span th:if="${isForSeries}">
+                    <a class="btn btn-primary"
+                       th:href="@{/users/{userId}/series/{seriesId}/episodes(userId=${userId}, seriesId=${episode.series.id})}">
+                        Go back to episodes list
+                        </a>
+                </span>
+                <span th:unless="${isForSeries}">
+                    <a class="btn btn-primary"
+                       th:href="@{/users/{userId}/series(userId=${userId})}">
+                        Go back to series list
+                    </a>
+                </span>
             </div>
         </div>
     </div>

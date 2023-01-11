@@ -98,7 +98,7 @@ function markEpisode(id) {
 }
 
 function unMarkEpisode(id) {
-    $.confirmModal('Are you sure you want to mark this episode?', function () {
+    $.confirmModal('Are you sure you want to unmark this episode?', function () {
         $.ajax({
             url: window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/episodes/" + id + "/unmark",
             type: 'POST',
@@ -106,7 +106,7 @@ function unMarkEpisode(id) {
                 var url = '/table';
                 $("#licenseTable").load(url);
 
-                window.location = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/movies";
+                window.location = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/episodes";
                 $.toast({
                     text: "Successfully marked movie", // Text that is to be shown in the toast
                     heading: 'Success', // Optional heading to be shown on the toast

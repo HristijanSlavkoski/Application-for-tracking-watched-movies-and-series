@@ -151,6 +151,7 @@ public class EpisodeController
 		{
 			throw new RuntimeException("Episode does not exist");
 		}
+		mav.addObject("isForSeries", true);
 		mav.addObject("episode", episode);
 		return mav;
 	}

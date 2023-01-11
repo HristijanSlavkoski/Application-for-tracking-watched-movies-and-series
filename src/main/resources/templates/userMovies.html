@@ -83,7 +83,7 @@
                 </td>
                 <td>
                      <span th:if="${userMovieWatchedList.^[user.getId()==__${userId}__ && movie.getId() == __${movie.id}__]}">
-                        <button class="btn btn-success" th:attr="onclick=|UnMarkMovie('${movie.id}')|"><i
+                        <button class="btn btn-success" th:attr="onclick=|unMarkMovie('${movie.id}')|"><i
                                 class="fa fa-eye"></i>
                             Mark as not watched
                         </button>

@@ -98,7 +98,7 @@ function markMovie(id) {
 }
 
 function unMarkMovie(id) {
-    $.confirmModal('Are you sure you want to mark this movie?', function () {
+    $.confirmModal('Are you sure you want to unmark this movie?', function () {
         $.ajax({
             url: window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/movies/" + id + "/unmark",
             type: 'POST',
