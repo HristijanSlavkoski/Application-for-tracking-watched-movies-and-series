@@ -1,5 +1,7 @@
 package com.example.applicationfortrackingwatchedmoviesandseriesrest.model;
 
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.soapPackage.Movie;
+
 import java.io.Serializable;
 
 public class UserMovieWatchedPrimaryKey implements Serializable

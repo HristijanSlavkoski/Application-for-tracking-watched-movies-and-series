@@ -1,0 +1,243 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://localhost.com/movie" targetNamespace="http://localhost.com/movie">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://localhost.com/movie"
+                   targetNamespace="http://localhost.com/movie">
+            <xs:element name="getAllMoviesRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAllMoviesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userMovieWatchedList" type="tns:userMovieWatchedList"/>
+                        <xs:element name="userId" type="xs:long"/>
+                        <xs:element name="movies" type="tns:movies"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="userMovieWatchedList">
+                <xs:sequence>
+                    <xs:element name="userMovieWatched" type="tns:userMovieWatched" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="userMovieWatched">
+                <xs:sequence>
+                    <xs:element name="user" type="tns:user"/>
+                    <xs:element name="movie" type="tns:movie"/>
+                    <xs:element name="dateWatched" type="xs:date"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="user">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element name="email" type="xs:string"/>
+                    <xs:element name="password" type="xs:string"/>
+                    <xs:element name="age" type="xs:int"/>
+                    <xs:element name="role" type="tns:role"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="role">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="USER"/>
+                    <xs:enumeration value="ADMIN"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="movie">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element name="title" type="xs:string"/>
+                    <xs:element name="genre" type="xs:string"/>
+                    <xs:element name="director" type="xs:string"/>
+                    <xs:element name="year" type="xs:int"/>
+                    <xs:element name="durationInMinutes" type="xs:int"/>
+                    <xs:element name="image" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="movies">
+                <xs:sequence>
+                    <xs:element name="movie" type="tns:movie" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="addMovieRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userId" type="xs:long"/>
+                        <xs:element name="movieDTO" type="tns:movieDTO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addMovieResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="status" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="movieDTO">
+                <xs:sequence>
+                    <xs:element name="title" type="xs:string"/>
+                    <xs:element name="genre" type="xs:string"/>
+                    <xs:element name="director" type="xs:string"/>
+                    <xs:element name="year" type="xs:int"/>
+                    <xs:element name="durationInMinutes" type="xs:int"/>
+                    <xs:element name="image" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="updateMovieRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userId" type="xs:long"/>
+                        <xs:element name="movieDTO" type="tns:movieDTO"/>
+                        <xs:element name="movieId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="updateMovieResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="status" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteMovieRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userId" type="xs:long"/>
+                        <xs:element name="movieId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteMovieResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="status" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getMovieByIdRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userId" type="xs:long"/>
+                        <xs:element name="movieId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getMovieByIdResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="movie" type="tns:movie"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getAllMoviesRequest">
+        <wsdl:part name="parameters" element="tns:getAllMoviesRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getAllMoviesResponse">
+        <wsdl:part name="parameters" element="tns:getAllMoviesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="addMovieRequest">
+        <wsdl:part name="parameters" element="tns:addMovieRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addMovieResponse">
+        <wsdl:part name="parameters" element="tns:addMovieResponse"/>
+    </wsdl:message>
+    <wsdl:message name="updateMovieRequest">
+        <wsdl:part name="parameters" element="tns:updateMovieRequest"/>
+    </wsdl:message>
+    <wsdl:message name="updateMovieResponse">
+        <wsdl:part name="parameters" element="tns:updateMovieResponse"/>
+    </wsdl:message>
+    <wsdl:message name="deleteMovieRequest">
+        <wsdl:part name="parameters" element="tns:deleteMovieRequest"/>
+    </wsdl:message>
+    <wsdl:message name="deleteMovieResponse">
+        <wsdl:part name="parameters" element="tns:deleteMovieResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getMovieByIdRequest">
+        <wsdl:part name="parameters" element="tns:getMovieByIdRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getMovieByIdResponse">
+        <wsdl:part name="parameters" element="tns:getMovieByIdResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="MovieControllerPortType">
+        <wsdl:operation name="getAllMovies">
+            <wsdl:input message="tns:getAllMoviesRequest"/>
+            <wsdl:output message="tns:getAllMoviesResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="addMovie">
+            <wsdl:input message="tns:addMovieRequest"/>
+            <wsdl:output message="tns:addMovieResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="updateMovie">
+            <wsdl:input message="tns:updateMovieRequest"/>
+            <wsdl:output message="tns:updateMovieResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteMovie">
+            <wsdl:input message="tns:deleteMovieRequest"/>
+            <wsdl:output message="tns:deleteMovieResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getMovieById">
+            <wsdl:input message="tns:getMovieByIdRequest"/>
+            <wsdl:output message="tns:getMovieByIdResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="MovieControllerBinding" type="tns:MovieControllerPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getAllMovies">
+            <soap:operation soapAction="http://localhost.com/movie/getAllMovies"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addMovie">
+            <soap:operation soapAction="http://localhost.com/movie/addMovie"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="updateMovie">
+            <soap:operation soapAction="http://localhost.com/movie/updateMovie"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteMovie">
+            <soap:operation soapAction="http://localhost.com/movie/deleteMovie"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getMovieById">
+            <soap:operation soapAction="http://localhost.com/movie/getMovieById"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="MovieControllerService">
+        <wsdl:port name="MovieControllerPort" binding="tns:MovieControllerBinding">
+            <soap:address location="http://localhost.com/movie"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

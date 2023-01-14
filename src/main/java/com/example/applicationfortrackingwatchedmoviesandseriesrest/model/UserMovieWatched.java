@@ -1,5 +1,7 @@
 package com.example.applicationfortrackingwatchedmoviesandseriesrest.model;
 
+import com.example.applicationfortrackingwatchedmoviesandseriesrest.soapPackage.Movie;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

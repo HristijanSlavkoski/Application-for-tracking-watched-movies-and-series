@@ -1,0 +1,133 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://localhost.com/movie"
+           targetNamespace="http://localhost.com/movie">
+    <xs:element name="getAllMoviesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllMoviesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userMovieWatchedList" type="tns:userMovieWatchedList"/>
+                <xs:element name="userId" type="xs:long"/>
+                <xs:element name="movies" type="tns:movies"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="userMovieWatchedList">
+        <xs:sequence>
+            <xs:element name="userMovieWatched" type="tns:userMovieWatched" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="userMovieWatched">
+        <xs:sequence>
+            <xs:element name="user" type="tns:user"/>
+            <xs:element name="movie" type="tns:movie"/>
+            <xs:element name="dateWatched" type="xs:date"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="user">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+            <xs:element name="age" type="xs:int"/>
+            <xs:element name="role" type="tns:role"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="role">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="USER"/>
+            <xs:enumeration value="ADMIN"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="movie">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="genre" type="xs:string"/>
+            <xs:element name="director" type="xs:string"/>
+            <xs:element name="year" type="xs:int"/>
+            <xs:element name="durationInMinutes" type="xs:int"/>
+            <xs:element name="image" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="movies">
+        <xs:sequence>
+            <xs:element name="movie" type="tns:movie" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="addMovieRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+                <xs:element name="movieDTO" type="tns:movieDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="addMovieResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="movieDTO">
+        <xs:sequence>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="genre" type="xs:string"/>
+            <xs:element name="director" type="xs:string"/>
+            <xs:element name="year" type="xs:int"/>
+            <xs:element name="durationInMinutes" type="xs:int"/>
+            <xs:element name="image" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="updateMovieRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+                <xs:element name="movieDTO" type="tns:movieDTO"/>
+                <xs:element name="movieId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateMovieResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteMovieRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+                <xs:element name="movieId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteMovieResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getMovieByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+                <xs:element name="movieId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getMovieByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="movie" type="tns:movie"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
